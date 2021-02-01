@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Android Build & Sign
     runs-on: ubuntu-latest
 
     steps:
