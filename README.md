@@ -11,5 +11,14 @@ Keep your generated file secret and password secret. Do not push them to version
 Generate base64 string from the generated file:
 
 ```
-openssl base64 -in velotio.keystore -out velotio.keystore.base64
+openssl base64 < velotio.keystore | tr -d '\n' | tee velotio.keystore.base64.txt
+```
+
+
+Create secrets from settings tab:
+```
+ANDROID_SIGNING_KEY
+ANDROID_SIGNING_ALIAS
+ANDROID_SIGNING_STORE_PASSWORD
+ANDROID_SIGNING_KEY_PASSWORD
 ```
