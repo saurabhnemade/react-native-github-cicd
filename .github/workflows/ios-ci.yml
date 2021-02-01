@@ -33,13 +33,14 @@ jobs:
           cd ios && pod install
 
       - name: Build app
-        run: |       
-          xcodebuild -workspace myapp.xcworkspace -scheme myapp archive -archivePath myapp.xcarchive -allowProvisioningUpdates
-          xcodebuild -exportArchive -archivePath ./myapp.xcarchive -exportPath . -exportOptionsPlist myapp/Info.plist
-          mv myapp.ipa ../myapp.ipa
+        run: |
+          cd ios       
+          xcodebuild -workspace ReactNativeGithubCICD.xcworkspace -scheme ReactNativeGithubCICD archive -archivePath ReactNativeGithubCICD.xcarchive -allowProvisioningUpdates
+          xcodebuild -exportArchive -archivePath ./ReactNativeGithubCICD.xcarchive -exportPath . -exportOptionsPlist ReactNativeGithubCICD/Info.plist
+          mv ReactNativeGithubCICD.ipa ../ReactNativeGithubCICD.ipa
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: myapp.ipa
+          name: ReactNativeGithubCICD.ipa
           path: ios/build/
