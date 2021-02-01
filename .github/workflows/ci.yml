@@ -56,14 +56,14 @@ jobs:
       - name: Debug Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: Signed App Bundle
-          path: android/app/build/outputs/apk
+          name: Unsigned App Bundle
+          path: android/app/build/outputs/apk/release
 
       - name: Sign App Bundle
         id: sign_app
         uses: r0adkll/sign-android-release@fix/bundle-signing
         with:
-          releaseDirectory: android/app/build/outputs/bundle/release
+          releaseDirectory: android/app/build/outputs/apk/release
           signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
           alias: ${{ secrets.ANDROID_SIGNING_ALIAS }}
           keyStorePassword: ${{ secrets.ANDROID_SIGNING_STORE_PASSWORD }}
