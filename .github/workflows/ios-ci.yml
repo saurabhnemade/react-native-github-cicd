@@ -1,0 +1,46 @@
+name: Continuous Integration iOS v1
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: iOS Build
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@master
+
+      - name: NPM Cache
+        uses: c-hive/gha-npm-cache@v1
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Run test cases
+        run: |
+          npm run test-ci  
+
+      - name: Install pod dependencies
+        run: |
+          cd ios && pod install
+
+      - name: Build app
+        run: |
+          cd ios       
+          xcodebuild -workspace ReactNativeGithubCICD.xcworkspace -scheme ReactNativeGithubCICD archive -archivePath ReactNativeGithubCICD.xcarchive -allowProvisioningUpdates
+          xcodebuild -exportArchive -archivePath ./ReactNativeGithubCICD.xcarchive -exportPath . -exportOptionsPlist ReactNativeGithubCICD/Info.plist
+          mv ReactNativeGithubCICD.ipa ../ReactNativeGithubCICD.ipa
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: ReactNativeGithubCICD.ipa
+          path: ios/build/
