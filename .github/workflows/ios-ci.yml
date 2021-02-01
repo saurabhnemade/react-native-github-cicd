@@ -1,0 +1,29 @@
+name: Continuous Integration iOS v1
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Android Build & Sign
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@master
+
+      - name: NPM Cache
+        uses: c-hive/gha-npm-cache@v1
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Run test cases
+        run: |
+          npm run test-ci  
